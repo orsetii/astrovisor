@@ -169,7 +169,7 @@
     <ClInclude Include="inc\driver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="inc\README.md" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
