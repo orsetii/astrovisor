@@ -56,6 +56,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 	DriverObject->MajorFunction[IRP_MJ_CLOSE] = MajorFunctions;
 #endif
 
+	return status;
 }
 
 
