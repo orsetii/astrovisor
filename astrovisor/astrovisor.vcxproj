@@ -67,6 +67,7 @@
     <ConfigurationType>Driver</ConfigurationType>
     <DriverType>KMDF</DriverType>
     <DriverTargetPlatform>Universal</DriverTargetPlatform>
+    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <TargetVersion>Windows10</TargetVersion>
@@ -152,11 +153,14 @@
       <PreprocessorDefinitions>_WIN64;_AMD64_;AMD64;%(PreprocessorDefinitions);DEBUG</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Full</Optimization>
+      <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\orseti\source\repos\astrovisor\astrovisor\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -166,18 +170,23 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inc\arch\msr.h" />
+    <ClCompile Include="src\astrovisor.c" />
     <ClCompile Include="src\cpuid.c" />
     <ClCompile Include="src\driver.c" />
     <ClCompile Include="src\utils.c" />
+    <ClCompile Include="src\vmcb.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\arch\cpuid.h" />
     <ClInclude Include="inc\arch\cr.h" />
     <ClInclude Include="inc\arch\dr.h" />
+    <ClInclude Include="inc\arch\msr.h" />
     <ClInclude Include="inc\arch\rflags.h" />
+    <ClInclude Include="inc\astrovisor.h" />
     <ClInclude Include="inc\driver.h" />
     <ClInclude Include="inc\utils.h" />
+    <ClInclude Include="inc\vcpu.h" />
+    <ClInclude Include="inc\vmcb.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
