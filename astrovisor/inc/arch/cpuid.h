@@ -1,7 +1,7 @@
 #pragma once
 
-int cpuid_vme_support();
-int cpuid_svm_support();
+int cpuid_vme_support(void);
+int cpuid_svm_support(void);
 
 union  __cpuid_t
 {
