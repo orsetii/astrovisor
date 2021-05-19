@@ -1,9 +1,10 @@
 #include "driver.h"
 #include "utils.h"
+#include "astrovisor.h"
 
 void DriverUnload(PDRIVER_OBJECT dob)
 {
-	AstroUnload();
+	//TODO -> AstroUnload();
 	dbgprint("Driver unloaded, deleting symbolic links and devices");
 	IoDeleteDevice(dob->DeviceObject);
 	IoDeleteSymbolicLink(&DEVICE_SYMBOLIC_NAME);
@@ -44,7 +45,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 
 	NTSTATUS status = 0;
 
-	DriverObject->DriverUnload = DriverUnload;
+	//DriverObject->DriverUnload = DriverUnload;
 
 	// NOTE: When we are debugging, we don't want to start and exec
 	// 	   some user mode program every time to perform a IRP_MJ_CREATE IOCTL,
@@ -52,6 +53,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 	// 	   no user interaction required. (Implemented in the Visual Studio Project C/C++->Preprocessor Settings)
 
 #ifdef DEBUG
+	start_hv();
 #else
 	// Routines to handle create/close to the device symlink
 	DriverObject->MajorFunction[IRP_MJ_CREATE] = MajorFunctions;
