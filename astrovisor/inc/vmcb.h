@@ -1,6 +1,8 @@
 #pragma once
 #include <ntddk.h>
 
+
+
 __declspec(align(1024)) struct __vmcb_control_t {
 
 	unsigned __int64 intercept_read_cr0 : 1;
@@ -347,10 +349,8 @@ struct __vmcb_statesave_t {
 	// remaining reserved bits
 };
 
+
 __declspec(align(4096)) struct __vmcb_t {
 	struct __vmcb_control_t control;
 	struct __vmcb_statesave_t statesave;
 };
-
-struct __vmcb_t* vmcb_alloc_and_zero();
-int vmcb_init(struct __vmcb_t*);
