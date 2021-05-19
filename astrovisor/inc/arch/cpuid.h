@@ -3,6 +3,13 @@
 int cpuid_vme_support(void);
 int cpuid_svm_support(void);
 
+enum svm_error {
+	SVM_ALLOWED = 0,
+	SVM_NOT_AVAIL,
+	SVM_DISABLED_AT_BIOS_NOT_UNLOCKABLE,
+	SVM_DISABLED_WITH_KEY,
+};
+
 union  __cpuid_t
 {
 	struct
@@ -167,5 +174,26 @@ union  __cpuid_t
 
 			};
 		} feature_edx;
+		union
+		{
+			unsigned __int32 flags;
+			struct
+			{
+				unsigned __int32 np : 1;
+				unsigned __int32 lbr_virt : 1;
+				unsigned __int32 svml : 1;
+				unsigned __int32 nrips : 1;
+				unsigned __int32 tsc_rate_msr : 1;
+				unsigned __int32 vmcb_clean : 1;
+				unsigned __int32 flush_by_asid : 1;
+				unsigned __int32 decode_assists : 1;
+				unsigned __int32 reserved0 : 2;
+				unsigned __int32 pause_intercept_filter : 1;
+				unsigned __int32 reserved1 : 1;
+				unsigned __int32 pause_filter_threshold : 1;
+				unsigned __int32 reserved2 : 18;
+
+			};
+		} svm_feature_edx;
 	};
 };
