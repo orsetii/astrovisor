@@ -1,3 +1,5 @@
+#pragma once
+
 #include <wdm.h>
 
 // Names to represent our device to the OS.
