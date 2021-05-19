@@ -1,8 +1,10 @@
 #include "driver.h"
+#include "utils.h"
 
 void DriverUnload(PDRIVER_OBJECT dob)
 {
-	DbgPrint("Driver unloaded, deleting symbolic links and devices");
+	AstroUnload();
+	dbgprint("Driver unloaded, deleting symbolic links and devices");
 	IoDeleteDevice(dob->DeviceObject);
 	IoDeleteSymbolicLink(&DEVICE_SYMBOLIC_NAME);
 }
