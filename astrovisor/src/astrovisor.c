@@ -1,15 +1,17 @@
 #include "arch/cpuid.h"
 #include "arch/msr.h"
+#include "arch/dtr.h"
 #include "vmcb.h"
 #include "vcpu.h"
 #include "utils.h"
 
+
 void enable_svm(void)
 {
 	union __amd64_efer_t efer = { 0 };
-	efer.control = __readmsr(EFER);
+	efer.control = __readmsr(IA32_EFER_MSR);
 	efer.bits.svm_enable = 1;
-	__writemsr(EFER, efer.control);
+	__writemsr(IA32_EFER_MSR, efer.control);
 }
 
 // Starts the hypervisor for some processor
@@ -18,6 +20,8 @@ int start_hv(void)
 
 	// Check that SVM is enabled as per AMD spec.
 	int ret = cpuid_svm_support();
+	// If returned an error, print the error and 
+	// return -1.
 	if (ret != SVM_ALLOWED) {
 		if (ret == SVM_NOT_AVAIL) {
 			dbgprint("SVM Not Available.");
@@ -30,14 +34,17 @@ int start_hv(void)
 		}
 		return -1;
 	}
+	// Enable SVM in the EFER MSR
 	enable_svm();
 	dbgprint("SVM Enabled!");
 
-	struct __vcpu_t vcpu = { 0 };
+	// Create Virtual Processer Structure
+	struct __vcpu_t* vcpu = (struct __vcpu_t*)alloc_pagealigned_physical_memory_with_tag(sizeof(struct __vcpu_t));
 
-	vcpu.vmcb = vmcb_alloc_and_zero();
-	vcpu.vmcb_physical = get_physical_address(vcpu.vmcb);
-	dbgprint("VMCB Allocated at virtual: %p and at physical: 0x%x", vcpu.vmcb, vcpu.vmcb_physical);
+
+
+	// Prepare vcpu state for running the hypervisor
+	prepare_vcpu(vcpu);
 
 
 

@@ -18,7 +18,7 @@ int cpuid_svm_support(void)
 	}
 
 	union __amd64_vm_cr_t vm_cr = { 0 };
-	vm_cr.control = __readmsr(VM_CR);
+	vm_cr.control = __readmsr(SVM_VM_CR_MSR);
 	if (vm_cr.bits.svm_disable == 0) {
 		return SVM_ALLOWED;
 	}

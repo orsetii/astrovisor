@@ -174,12 +174,14 @@
     <ClCompile Include="src\cpuid.c" />
     <ClCompile Include="src\driver.c" />
     <ClCompile Include="src\utils.c" />
+    <ClCompile Include="src\vcpu.c" />
     <ClCompile Include="src\vmcb.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\arch\cpuid.h" />
     <ClInclude Include="inc\arch\cr.h" />
     <ClInclude Include="inc\arch\dr.h" />
+    <ClInclude Include="inc\arch\dtr.h" />
     <ClInclude Include="inc\arch\msr.h" />
     <ClInclude Include="inc\arch\rflags.h" />
     <ClInclude Include="inc\astrovisor.h" />
