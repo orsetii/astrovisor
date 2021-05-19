@@ -1,12 +1,13 @@
 #pragma once
 
-enum msr_addr {
-	EFER  = 0xC0000080,
-	VM_CR = 0xC0010114,
-	IGNNE = 0xC0010115, // not used 15.30.2 for ref
-	SMM_CTL = 0xC0010116,
-	VM_HSAVE_PA = 0xC0010117,
-};
+unsigned __int64 __readmsr(unsigned __int32 register);
+
+#define IA32_PAT_MSR			 0x00000277U
+#define IA32_EFER_MSR			 0xC0000080U
+#define SVM_VM_CR_MSR			 0xC0010114U
+#define SVM_IGNNE_MSR			 0xC0010115U // not used 15.30.2 for ref
+#define SVM_SMM_CTL_MSR		 0xC0010116U
+#define SVM_VM_HSAVE_PA_MSR	 0xC0010117U
 
 
 // Extended Features MSR
