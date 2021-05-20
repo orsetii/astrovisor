@@ -53,7 +53,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 	// 	   no user interaction required. (Implemented in the Visual Studio Project C/C++->Preprocessor Settings)
 
 #ifdef DEBUG
-	start_hv();
+	status = start_hv();
 #else
 	// Routines to handle create/close to the device symlink
 	DriverObject->MajorFunction[IRP_MJ_CREATE] = MajorFunctions;

@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "arch/segment.h"
 #include <stdarg.h>
 
 void dbgprint (_In_ PCCH Format, ...)
@@ -15,12 +16,12 @@ PHYSICAL_ADDRESS get_physical_address(_In_ PVOID BaseAddress)
     return MmGetPhysicalAddress(BaseAddress);
 }
 
-int get_proc_count(void)
+ULONG get_proc_count(void)
 {
     return KeQueryActiveProcessorCountEx(ALL_PROCESSOR_GROUPS);
 }
 
-int get_proc_number(void) 
+ULONG get_proc_number(void) 
 {
     return KeGetCurrentProcessorNumberEx(NULL);
 }
@@ -62,4 +63,21 @@ _IRQL_requires_same_
 void free_pagealigned_physical_memory_with_tag(_Pre_notnull_ __drv_freesMem(Mem) PVOID BaseAddress)
 {
     ExFreePoolWithTag(BaseAddress, TAG);
+}
+
+
+unsigned __int16 get_segment_access_right(_In_ segment_selector, _In_ gdt_base)
+{
+    PSEGMENT_DESCRIPTOR desc = (PSEGMENT_DESCRIPTOR)gdt_base + (segment_selector & (~3));
+    SEGMENT_ATTRIBUTE attribute;
+    attribute.bits.type = desc->bits.type;
+    attribute.bits.system = desc->bits.system;
+    attribute.bits.dpl = desc->bits.dpl;
+    attribute.bits.present = desc->bits.present;
+    attribute.bits.avl = desc->bits.avl;
+    attribute.bits.longmode = desc->bits.longmode;
+    attribute.bits.defaultbit = desc->bits.defaultbit;
+    attribute.bits.granularity = desc->bits.granularity;
+    attribute.bits.reserved1 = 0;
+    return attribute.control;
 }

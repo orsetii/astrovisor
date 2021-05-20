@@ -1,9 +1,10 @@
 #pragma once
+#include "arch/segment.h"
 #include <ntddk.h>
 
 
 
-__declspec(align(1024)) struct __vmcb_control_t {
+__declspec(align(1024)) typedef struct _VMCB_CONTROL {
 
 	unsigned __int64 intercept_read_cr0 : 1;
 	unsigned __int64 intercept_read_cr1 : 1;
@@ -275,27 +276,50 @@ __declspec(align(1024)) struct __vmcb_control_t {
 	unsigned __int64 reserved21: 12;
 
 	// Remaining n-1024 reserved.
-};
+} VMCB_CONTROL, *PVMCB_CONTROL;
 
-// 16 bytes
-struct segment_t {
-	unsigned __int16 selector;
-	unsigned __int16 attrib;
-	unsigned __int32 limit;
-	unsigned __int64 base;
-};
 
-struct __vmcb_statesave_t {
-	struct segment_t es;
-	struct segment_t cs;
-	struct segment_t ss;
-	struct segment_t ds;
-	struct segment_t fs;
-	struct segment_t gs;
-	struct segment_t gdtr;
-	struct segment_t ldtr;
-	struct segment_t idtr;
-	struct segment_t tr;
+typedef struct _VMCB_STATESAVE {
+	unsigned __int16 es_selector;
+	unsigned __int16 es_attrib;
+	unsigned __int32 es_limit;
+	unsigned __int64 es_base;
+	unsigned __int16 cs_selector;
+	unsigned __int16 cs_attrib;
+	unsigned __int32 cs_limit;
+	unsigned __int64 cs_base;
+	unsigned __int16 ss_selector;
+	unsigned __int16 ss_attrib;
+	unsigned __int32 ss_limit;
+	unsigned __int64 ss_base;
+	unsigned __int16 ds_selector;
+	unsigned __int16 ds_attrib;
+	unsigned __int32 ds_limit;
+	unsigned __int64 ds_base;
+	unsigned __int16 fs_selector;
+	unsigned __int16 fs_attrib;
+	unsigned __int32 fs_limit;
+	unsigned __int64 fs_base;
+	unsigned __int16 gs_selector;
+	unsigned __int16 gs_attrib;
+	unsigned __int32 gs_limit;
+	unsigned __int64 gs_base;
+	unsigned __int16 gdtr_selector;
+	unsigned __int16 gdtr_attrib;
+	unsigned __int32 gdtr_limit;
+	unsigned __int64 gdtr_base;
+	unsigned __int16 ldtr_selector;
+	unsigned __int16 ldtr_attrib;
+	unsigned __int32 ldtr_limit;
+	unsigned __int64 ldtr_base;
+	unsigned __int16 idtr_selector;
+	unsigned __int16 idtr_attrib;
+	unsigned __int32 idtr_limit;
+	unsigned __int64 idtr_base;
+	unsigned __int16 tr_selector;
+	unsigned __int16 tr_attrib;
+	unsigned __int32 tr_limit;
+	unsigned __int64 tr_base;
 
 	unsigned char reserved0[0x2B];
 
@@ -347,10 +371,10 @@ struct __vmcb_statesave_t {
 	unsigned __int32 spec_ctrl;
 
 	// remaining reserved bits
-};
+}VMCB_STATESAVE, *PVMCB_STATESAVE;
 
 
-__declspec(align(4096)) struct __vmcb_t {
-	struct __vmcb_control_t control;
-	struct __vmcb_statesave_t statesave;
-};
+__declspec(align(4096)) typedef struct _VMCB {
+	VMCB_CONTROL control;
+	VMCB_STATESAVE statesave;
+}VMCB, *PVMCB;

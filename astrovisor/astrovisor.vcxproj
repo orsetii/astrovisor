@@ -153,8 +153,9 @@
       <PreprocessorDefinitions>_WIN64;_AMD64_;AMD64;%(PreprocessorDefinitions);DEBUG</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Full</Optimization>
-      <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4201;4131;4242;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <StructMemberAlignment>Default</StructMemberAlignment>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,12 +179,14 @@
     <ClCompile Include="src\vmcb.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\arch\context.h" />
     <ClInclude Include="inc\arch\cpuid.h" />
     <ClInclude Include="inc\arch\cr.h" />
     <ClInclude Include="inc\arch\dr.h" />
     <ClInclude Include="inc\arch\dtr.h" />
     <ClInclude Include="inc\arch\msr.h" />
     <ClInclude Include="inc\arch\rflags.h" />
+    <ClInclude Include="inc\arch\segment.h" />
     <ClInclude Include="inc\astrovisor.h" />
     <ClInclude Include="inc\driver.h" />
     <ClInclude Include="inc\utils.h" />
@@ -192,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="asm\vm.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

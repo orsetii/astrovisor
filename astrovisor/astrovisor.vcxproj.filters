@@ -77,8 +77,19 @@
     <ClInclude Include="inc\arch\dtr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\arch\segment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\arch\context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="asm\vm.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>
